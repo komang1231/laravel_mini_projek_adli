@@ -1,0 +1,5 @@
+models:
+  Barang:
+    nama: string
+    stok: integer
+    harga: integer

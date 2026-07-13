@@ -1,0 +1,30 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+/* @import './layout.css'; */
+@import './sidebar.css';
+@import './navbar.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+.main-wrapper{
+    margin-left:260px;
+    transition:.3s ease;
+    min-height:100vh;
+    background:#F5F7FA;
+
+    .main-content{
+        z-index:1;
+        padding:100px 20px;
+        
+    }
+}
+
+.sidebar.collapsed ~ .main-wrapper{
+    margin-left:80px;
+}

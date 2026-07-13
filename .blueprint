@@ -1,0 +1,6 @@
+created:
+    - database/factories/BarangFactory.php
+    - database/migrations/2026_07_08_115655_create_barangs_table.php
+    - app/Models/Barang.php
+models:
+    Barang: { nama: string, stok: integer, harga: integer }

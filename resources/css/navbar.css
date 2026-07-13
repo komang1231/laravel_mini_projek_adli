@@ -1,0 +1,24 @@
+.navbar{
+    z-index: 1050;
+    
+    height:70px;
+    padding:0 20px;
+
+    background:white;
+
+    box-shadow:0 .125rem .25rem rgba(0,0,0,.075);
+
+    .search-input{
+        width:350px;
+        padding-left:42px;
+    }
+
+    .search-icon{
+        position:absolute;
+        left:15px;
+        top:50%;
+        transform:translateY(-50%);
+        color:gray;
+    }
+
+}
