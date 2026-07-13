@@ -1,4 +1,4 @@
-$cari = $_GET['cari'] ?? '';
+{{-- $cari = $_GET['cari'] ?? '';
 
 $sort = $_GET['sort'] ?? 'nama_barang';
 
@@ -50,4 +50,5 @@ $data = $conn->query($sql);
 
     <input type="text" class="form-control" placeholder="Cari Kategori...">
 
-</div>
+</div> --}}
+{{-- adnrew --}}
