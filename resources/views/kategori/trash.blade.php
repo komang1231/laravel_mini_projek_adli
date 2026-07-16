@@ -1,43 +1,44 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Kategori
+    Trash Kategori
 @endsection
 
 @section('content')
     <div class="container-fluid">
 
-        @include('kategori.toast')
+        @if (session('success'))
+            <div class="alert alert-success">
+
+                {{ session('success') }}
+
+            </div>
+        @endif
 
         <div class="card border-0 shadow-sm">
 
             <div class="card-header bg-white border-0 py-3">
 
                 <h4 class="fw-bold mb-1">
-                    Kategori
+
+                    Trash Kategori
+
                 </h4>
 
                 <small class="text-muted">
-                    Kelola seluruh data kategori.
+
+                    Data kategori yang telah dihapus.
+
                 </small>
 
             </div>
 
             <div class="card-body">
-
-                <div class="row mb-4 align-items-center">
-
-                    <div class="col-md-1">
-
-                        <x-sort :route="route('kategoris.index')" />
-
-                    </div>
-
-
-                    <div class="col-md-4">
+                <div class="row mb-2 align-items-center">
+                    <div class="col-md-7">
 
                         @include('components.searchbar', [
-                            'route' => route('kategoris.index'),
+                            'route' => route('kategoris.trash'),
                             'placeholder' => 'Cari kategori...',
                         ])
 
@@ -45,28 +46,17 @@
 
                     </div>
 
-                    <a href="{{ route('kategoris.trash') }}" class="btn btn-dark col-md-2 gap-1">
+                    <div class="d-flex justify-content-end col-md-5 text-end">
 
-                        <i class="bi bi-trash3"></i>
+                        <a href="{{ route('kategoris.index') }}" class="btn btn-secondary">
 
-                        Trash
+                            <i class="bi bi-arrow-left"></i>
 
-                    </a>
-
-                    <div class="col-md-5 text-end">
-
-                        <a href="{{ route('kategoris.create') }}" class="btn btn-primary">
-
-                            <i class="bi bi-plus-lg"></i>
-
-                            Tambah Kategori
+                            Kembali
 
                         </a>
 
-
                     </div>
-
-
                 </div>
 
                 <div class="table-responsive">
@@ -84,7 +74,9 @@
                                 <th>Nama Kategori</th>
 
                                 <th width="220" class="text-center">
+
                                     Aksi
+
                                 </th>
 
                             </tr>
@@ -93,7 +85,7 @@
 
                         <tbody>
 
-                            @forelse ($kategoris as $kategori)
+                            @forelse($kategoris as $kategori)
                                 <tr>
 
                                     <td>{{ ++$i }}</td>
@@ -106,32 +98,26 @@
 
                                         <div class="d-flex justify-content-center gap-2">
 
-                                            {{-- <a href="{{ route('kategoris.show', $kategori->id) }}"
-                                                class="btn btn-secondary btn-sm" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Lihat">
+                                            <form action="{{ route('kategoris.restore', $kategori->id) }}" method="POST">
 
-                                                <i class="bi bi-eye"></i>
+                                                @csrf
+                                                @method('PUT')
 
-                                            </a> --}}
+                                                <button class="btn btn-success btn-sm">
 
-                                            <a href="{{ route('kategoris.edit', $kategori->id) }}"
-                                                class="btn btn-warning btn-sm" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Edit">
+                                                    <i class="bi bi-arrow-counterclockwise"></i>
 
-                                                <i class="bi bi-pencil-square"></i>
+                                                </button>
 
-                                            </a>
+                                            </form>
 
-                                            <form action="{{ route('kategoris.destroy', $kategori->id) }}" method="POST"
-                                                class="delete-form">
+                                            <form action="{{ route('kategoris.forceDelete', $kategori->id) }}"
+                                                method="POST">
 
                                                 @csrf
                                                 @method('DELETE')
 
-                                                <button type="button" class="btn btn-danger btn-sm btn-delete"
-                                                    data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                                    data-barang="{{ $kategori->nama_kategori }}" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Hapus">
+                                                <button class="btn btn-danger btn-sm">
 
                                                     <i class="bi bi-trash"></i>
 
@@ -151,13 +137,13 @@
 
                                     <td colspan="4" class="text-center py-5">
 
-                                        <i class="bi bi-inbox fs-1 text-secondary"></i>
+                                        <i class="bi bi-trash3 fs-1 text-secondary"></i>
 
                                         <br><br>
 
                                         <span class="text-muted">
 
-                                            Belum ada data kategori.
+                                            Tidak ada data di Trash.
 
                                         </span>
 
@@ -172,9 +158,9 @@
 
                 </div>
 
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-end mt-3">
 
-                    {!! $kategoris->withQueryString()->links() !!}
+                    {{ $kategoris->links() }}
 
                 </div>
 
@@ -183,6 +169,4 @@
         </div>
 
     </div>
-
-    @include('kategori.modal_hapus');
 @endsection

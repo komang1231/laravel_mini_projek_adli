@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $barang->name ?? __('Show') . " " . __('Barang') }}
+    {{ $barang->name ?? __('Show') . ' ' . __('Barang') }}
 @endsection
 
 @section('content')
@@ -19,24 +19,77 @@
                     </div>
 
                     <div class="card-body bg-white">
-                        
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Kode Barang:</strong>
-                                    {{ $barang->kode_barang }}
-                                </div>
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Nama Barang:</strong>
-                                    {{ $barang->nama_barang }}
-                                </div>
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Deskripsi:</strong>
-                                    {{ $barang->deskripsi }}
-                                </div>
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Harga:</strong>
-                                    {{ $barang->harga }}
-                                </div>
 
+                        <div class="form-group mb-2 mb20">
+                            <strong>Kode Barang:</strong>
+                            {{ $barang->kode_barang }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Nama Barang:</strong>
+                            {{ $barang->nama_barang }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Kategori:</strong>
+                            {{ $barang->kategori->nama_kategori }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Deskripsi:</strong>
+                            @if ($barang->deskripsi)
+                                {{ $barang->deskripsi }}
+                            @else
+                                <span class="text-muted">-</span>
+                            @endif
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Harga:</strong>
+                            Rp. {{ number_format($barang->harga, 0, ',', '.') }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Stok:</strong>
+                            {{ $barang->stok }}
+                        </div>
+                        <hr>
+                        <h5>Informasi Supplier</h5>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Nama Supplier:</strong>
+                            @if ($barang->supplier)
+                                {{ $barang->supplier->nama_supplier }}
+                            @else
+                                <span class="text-muted">-</span>
+                            @endif
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>No HP Supplier:</strong>
+                            @if ($barang->supplier)
+                                {{ $barang->supplier->no_hp }}
+                            @else
+                                <span class="text-muted">-</span>
+                            @endif
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Alamat Supplier:</strong>
+                            @if ($barang->supplier)
+                                {{ $barang->supplier->alamat }}
+                            @else
+                                <span class="text-muted">-</span>
+                            @endif
+                        </div>
+
+                        <hr>
+                        
+
+                        <div class="form-group mb-2 mb20">
+                            <strong>Gambar:</strong>
+                            @if ($barang->gambar)
+                                <img src="{{ asset('storage/' . $barang->gambar) }}" alt="Gambar Barang"
+                                    class="img-fluid mt-2" style="max-width: 200px;">
+                            @else
+                                <div class="border border-secondary d-flex align-items-center justify-content-center"
+                                    style="width: 200px; height: 200px;">
+                                    <p>Tidak ada gambar</p>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>

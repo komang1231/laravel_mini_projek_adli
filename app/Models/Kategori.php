@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Barang;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Kategori
@@ -19,6 +20,8 @@ use App\Models\Barang;
  */
 class Kategori extends Model
 {
+
+    use SoftDeletes;
     public function barangs()
     {
         return $this->hasMany(Barang::class);

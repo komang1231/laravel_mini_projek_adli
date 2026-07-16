@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -58,12 +59,12 @@ class AuthController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
-        AuthController::logout($request);
+        Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::route('login');
+        return redirect()->route('login');
     }
 
     /**

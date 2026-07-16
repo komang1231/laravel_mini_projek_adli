@@ -15,12 +15,28 @@ class BarangController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
     public function index(Request $request): View
     {
-        $barangs = Barang::paginate(5);
+        $search = $request->search;
+        $sort = $request->sort ?? 'asc';
+
+        $barangs = Barang::when($search, function ($query) use ($search) {
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where('kode_barang', 'like', "%{$search}%")
+                    ->orWhere('nama_barang', 'like', "%{$search}%")
+                    ->orWhere('deskripsi', 'like', "%{$search}%");
+            });
+        })
+            ->orderBy('id', $sort)
+            ->paginate(5)
+            ->withQueryString();
 
         return view('barang.index', compact('barangs'))
-            ->with('i', ($request->input('page', 1) - 1) * $barangs->perPage());
+            ->with('i', (request()->input('page', 1) - 1) * $barangs->perPage());
     }
 
     /**

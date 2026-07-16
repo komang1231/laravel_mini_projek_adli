@@ -22,11 +22,18 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition(int $count = 20): array
     {
         return [
+            
+            'kode_user' => 'USR' . strtoupper(Str::random(3)) . rand(100, 999),
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'email' => //buat email berbeda dengan email yang sudah ada di database
+                $count === 1
+                    ? fake()->unique()->safeEmail()
+                    : fake()->safeEmail(),
+            'role' => fake()->randomElement(['admin', 'staff', 'user']),
+            'no_hp' => fake()->phoneNumber(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),

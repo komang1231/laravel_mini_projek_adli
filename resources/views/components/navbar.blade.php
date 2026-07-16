@@ -37,41 +37,64 @@
             @auth --}}
 
 
-                <!-- Notification -->
-                <button class="btn btn-light position-relative">
+            <!-- Notification -->
+            <button class="btn btn-light position-relative">
 
-                    <i class="bi bi-bell fs-5"></i>
+                <i class="bi bi-bell fs-5"></i>
 
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        3
-                    </span>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    99
+                </span>
+
+            </button>
+
+            <!-- Profile -->
+            <div class="dropdown">
+
+                <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
+
+                    <i class="bi bi-person-circle fs-4"></i>
+
+                    <span>Adli</span>
 
                 </button>
 
-                <!-- Profile -->
-                <div class="dropdown">
+                <ul class="dropdown-menu dropdown-menu-end">
 
-                    <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('profile') }}">
 
-                        <i class="bi bi-person-circle fs-4"></i>
+                            <i class="bi bi-person-circle me-2"></i>
 
-                        <span>Adli</span>
+                            Profile
 
-                    </button>
-
-                    <ul class="dropdown-menu dropdown-menu-end">
-
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                Profile
-                            </a>
-                        </li>
-
-                        <a class="dropdown-item text-danger" href="#">
-                            Logout
                         </a>
+                    </li>
 
-                    </ul>
+                    {{-- <a class="dropdown-item text-danger" href="#">
+                        Logout
+                    </a> --}}
+
+                    {{-- <li>
+
+                        <form action="{{ route('logout') }}" method="POST">
+
+                            @csrf
+
+                            <button type="submit"
+                                class="nav-link border-0 bg-transparent w-100 d-flex align-items-center text-danger">
+
+
+
+                                <span class="menu-text">Logout</span>
+
+                            </button>
+
+                        </form>
+
+                    </li> --}}
+
+                </ul>
                 {{-- @endauth --}}
             </div>
 

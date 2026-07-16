@@ -15,7 +15,7 @@
                 $table->id();
                 $table->string('kode_barang')->unique();
                 $table->string('nama_barang');
-                $table->text('deskripsi');
+                $table->text('deskripsi')->nullable();
                 $table->decimal('harga', 10, 2);
                 $table->integer('stok');
                 $table->string('gambar')->nullable();

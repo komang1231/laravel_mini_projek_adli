@@ -15,24 +15,24 @@ class Barang extends Seeder
         // menambahkan data dummy ke tabel barangs, dan menyesuaikan fieldnya dengan field yang ada di tabel barangs
         \DB::table('barangs')->insert([
             [
-                'kode_barang' => 'BRG001',
                 'nama_barang' => 'Barang 1',
                 'deskripsi' => 'Deskripsi Barang 1',
                 'harga' => 10000,
+                'stok' => 10,
                 'kategori_id' => 1,
             ],
             [
-                'kode_barang' => 'BRG002',
                 'nama_barang' => 'Barang 2',
                 'deskripsi' => 'Deskripsi Barang 2',
                 'harga' => 20000,
+                'stok' => 20,
                 'kategori_id' => 2,
             ],
             [
-                'kode_barang' => 'BRG003',
                 'nama_barang' => 'Barang 3',
                 'deskripsi' => 'Deskripsi Barang 3',
                 'harga' => 30000,
+                'stok' => 30,
                 'kategori_id' => 3,
             ]
         ]);

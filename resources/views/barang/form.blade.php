@@ -55,7 +55,7 @@
 
     </div>
 
-    {{-- <div class="col-lg-12 mb-3">
+    <div class="col-lg-12 mb-3">
 
         <label for="deskripsi" class="form-label fw-semibold">
 
@@ -63,11 +63,7 @@
 
         </label>
 
-        <textarea
-            name="deskripsi"
-            id="deskripsi"
-            rows="4"
-            class="form-control @error('deskripsi') is-invalid @enderror"
+        <textarea name="deskripsi" id="deskripsi" rows="4" class="form-control @error('deskripsi') is-invalid @enderror"
             placeholder="Masukkan deskripsi barang">{{ old('deskripsi', $barang?->deskripsi) }}</textarea>
 
         @error('deskripsi')
@@ -78,7 +74,7 @@
             </div>
         @enderror
 
-    </div> --}}
+    </div>
 
     <div class="col-lg-6 mb-4">
 
@@ -110,8 +106,15 @@
             </div>
         @enderror
 
+    </div>
 
-        <div class="input-group mt-3">
+    <div class="col-lg-6 mb-4">
+
+        <label for="stok" class="form-label fw-semibold">
+            Stok
+        </label>
+
+        <div class="input-group">
 
             <span class="input-group-text">
 
@@ -131,6 +134,11 @@
             </div>
         @enderror
     </div>
+
+    //label input barang
+    div
+    //input gambar 
+    
 </div>
 
 <div class="col-12">

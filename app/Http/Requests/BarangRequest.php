@@ -23,8 +23,9 @@ class BarangRequest extends FormRequest
     {
         return [
             'nama_barang' => 'required|string',
-            'deskripsi'   => 'required|string',
+            'deskripsi'   => 'nullable|string',
             'harga'       => 'required|numeric',
+            'stok'        => 'required|integer',
             'kategori_id' => 'required|exists:kategoris,id',
         ];
     }

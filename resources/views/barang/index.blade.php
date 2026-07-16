@@ -7,30 +7,7 @@
 @section('content')
     <div class="container-fluid">
 
-        @if (session('success'))
-            <div class="toast-container position-fixed top-0 end-0 p-3">
 
-                <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert">
-
-                    <div class="d-flex">
-
-                        <div class="toast-body">
-
-                            <i class="bi bi-check-circle-fill me-2"></i>
-
-                            {{ session('success') }}
-
-                        </div>
-
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast">
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-        @endif
 
         <div class="card border-0 shadow-sm">
 
@@ -50,19 +27,15 @@
 
                 <div class="row mb-4 align-items-center">
 
+                    <div class="col-md-1">
+
+                        <x-sort :route="route('barangs.index')" />
+
+                    </div>
+
                     <div class="col-md-4">
 
-                        <div class="input-group">
-
-                            <span class="input-group-text">
-
-                                <i class="bi bi-search"></i>
-
-                            </span>
-
-                            <input type="text" class="form-control" placeholder="Cari Barang...">
-
-                        </div>
+                        <x-searchbar :route="route('barangs.index')" placeholder="Cari Barang..." />
 
                     </div>
 
@@ -74,7 +47,7 @@
 
                     </a>
 
-                    <div class="col-md-6 text-end">
+                    <div class="col-md-5 text-end">
 
                         <a href="{{ route('barangs.create') }}" class="btn btn-primary">
 
@@ -102,9 +75,11 @@
 
                                 <th>Nama Barang</th>
 
-                                <th>Deskripsi</th>
+                                <th>Kategori</th>
 
                                 <th>Harga</th>
+
+                                <th>Stok</th>
 
                                 <th width="220" class="text-center">
                                     Aksi
@@ -125,11 +100,12 @@
 
                                     <td>{{ $barang->nama_barang }}</td>
 
-                                    <td>{{ $barang->deskripsi }}</td>
+                                    <td>{{ $barang->kategori->nama_kategori ?? 'Tidak ada kategori' }}</td>
 
                                     <td>
                                         Rp {{ number_format($barang->harga, 0, ',', '.') }}
                                     </td>
+                                    <td>{{ $barang->stok }}</td>
 
                                     <td>
 

@@ -1,55 +1,27 @@
-$cari = $_GET['cari'] ?? '';
+<form action="{{ $route }}" method="GET">
 
-$sort = $_GET['sort'] ?? 'nama_barang';
+    <input
+        type="hidden"
+        name="sort"
+        value="{{ request('sort', 'asc') }}">
 
-$allowedSort = ['nama_barang', 'harga', 'stok'];
+    <div class="input-group">
 
-if (!in_array($sort, $allowedSort)) {
-    $sort = 'nama_barang';
-}
+        <span class="input-group-text">
+            <i class="bi bi-search"></i>
+        </span>
 
-$order = isset($_GET['order']) ? 'DESC' : 'ASC';
-$mulai = trim($_GET['mulai'] ?? '');
-$sql = "
-    SELECT barang.*, kategori.nama_kategori
-    FROM barang
-    JOIN kategori ON barang.id_kategori = kategori.id_kategori
-    WHERE 1=1
-";
-if ($cari != '') {
-    $sql .= " AND (
-        barang.nama_barang LIKE '%$cari%'
-        OR barang.kode_barang LIKE '%$cari%'
-        OR kategori.nama_kategori LIKE '%$cari%'
-    )";
-}
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="{{ $placeholder }}"
+            value="{{ request('search') }}">
 
-if ($mulai != '') {
+        <button class="btn btn-primary" type="submit">
+            Cari
+        </button>
 
-    if ($sort == 'nama_barang') {
-        $sql .= " AND nama_barang >= '$mulai'";
-    } elseif ($sort == 'harga') {
-        $sql .= " AND harga >= " . (int)$mulai;
-    } elseif ($sort == 'stok') {
-        $sql .= " AND stok >= " . (int)$mulai;
-    }
-}
+    </div>
 
-$sql .= " ORDER BY $sort $order";
-
-$data = $conn->query($sql);
-
-
-<div class="input-group">
-
-    <span class="input-group-text">
-
-        <i class="bi bi-search"></i>
-
-    </span>
-
-    <input type="text" class="form-control" placeholder="Cari Kategori...">
-
-</div> 
-
-{{-- andreeeeewwwwwwwwwwwww --}}
+</form>

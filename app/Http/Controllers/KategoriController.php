@@ -16,9 +16,22 @@ class KategoriController extends Controller
      */
     public function index(Request $request): View
     {
-        $kategoris = Kategori::paginate();
+        $search = $request->search;
+        $sort = $request->sort ?? 'asc';
 
-        return view('kategori.index', compact('kategoris'))
+        $kategoris = Kategori::when($search, function ($query) use ($search) {
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where('kode_kategori', 'like', "%{$search}%")
+                    ->orWhere('nama_kategori', 'like', "%{$search}%");
+            });
+        })
+            ->orderBy('id', $sort)
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('kategori.index', compact('kategoris', 'search'))
             ->with('i', ($request->input('page', 1) - 1) * $kategoris->perPage());
     }
 
@@ -80,5 +93,40 @@ class KategoriController extends Controller
 
         return Redirect::route('kategoris.index')
             ->with('success', 'Kategori deleted successfully');
+    }
+
+
+    public function trash(Request $request)
+    {
+        $search = $request->search;
+
+        $kategoris = Kategori::onlyTrashed()
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('kode_kategori', 'like', "%{$search}%")
+                        ->orWhere('nama_kategori', 'like', "%{$search}%");
+                });
+            })
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('kategori.trash', compact('kategoris'))
+            ->with('i', (request()->input('page', 1) - 1) * $kategoris->perPage());
+    }
+
+    public function restore($id)
+    {
+        Kategori::onlyTrashed()->findOrFail($id)->restore();
+
+        return redirect()->route('kategoris.trash')
+            ->with('success', 'Kategori berhasil dipulihkan.');
+    }
+
+    public function forceDelete($id)
+    {
+        Kategori::onlyTrashed()->findOrFail($id)->forceDelete();
+
+        return redirect()->route('kategoris.trash')
+            ->with('success', 'Kategori berhasil dihapus permanen.');
     }
 }
