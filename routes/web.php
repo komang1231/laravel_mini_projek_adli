@@ -45,6 +45,10 @@ Route::middleware('auth')->group(function () {
     // CRUD BARANG & KATEGORI
     Route::resource('barangs', BarangController::class);
     Route::resource('kategoris', KategoriController::class);
-    // CRUD User
+
+    // Trash & CRUD User
+    Route::get('/users/trash', [UserController::class, 'trash'])->name('users.trash');
+    Route::put('/users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
+    Route::delete('/users/{id}/force-delete', [UserController::class, 'forceDelete'])->name('users.forceDelete');
     Route::resource('users', UserController::class);
 });

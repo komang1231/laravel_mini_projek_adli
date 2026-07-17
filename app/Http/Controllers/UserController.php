@@ -78,7 +78,21 @@ class UserController extends Controller
 
     public function index(Request $request): View
     {
-        $users = User::paginate();
+        $search = $request->search;
+        $sort = $request->sort ?? 'asc';
+        $query = User::query();
+
+        if ($search) {
+            $query->where('kode_user', 'like', "%{$search}%")
+                ->orWhere('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('role', 'like', "%{$search}%");
+        }
+
+        $users = $query
+            ->orderBy('id', $sort)
+            ->paginate(10)
+            ->withQueryString();
 
         return view('user.index', compact('users'))
             ->with('i', ($request->input('page', 1) - 1) * $users->perPage());
@@ -110,7 +124,7 @@ class UserController extends Controller
      */
     public function show($id): View
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
         return view('user.show', compact('user'));
     }
@@ -120,7 +134,7 @@ class UserController extends Controller
      */
     public function edit($id): View
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
         return view('user.edit', compact('user'));
     }
@@ -138,9 +152,47 @@ class UserController extends Controller
 
     public function destroy($id): RedirectResponse
     {
-        User::find($id)->delete();
+        User::findOrFail($id)->delete();
 
         return Redirect::route('users.index')
             ->with('success', 'User deleted successfully');
+    }
+
+    public function trash(Request $request): View
+    {
+        $search = $request->search;
+
+        $query = User::onlyTrashed();
+
+        if ($search) {
+            $query->where('kode_user', 'like', "%{$search}%")
+                ->orWhere('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('role', 'like', "%{$search}%");
+        }
+
+        $users = $query
+            ->orderBy('id', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('user.trash', compact('users'))
+            ->with('i', ($request->input('page', 1) - 1) * $users->perPage());
+    }
+
+    public function restore($id): RedirectResponse
+    {
+        User::onlyTrashed()->findOrFail($id)->restore();
+
+        return Redirect::route('users.trash')
+            ->with('success', 'User berhasil dipulihkan.');
+    }
+
+    public function forceDelete($id): RedirectResponse
+    {
+        User::onlyTrashed()->findOrFail($id)->forceDelete();
+
+        return Redirect::route('users.trash')
+            ->with('success', 'User berhasil dihapus permanen.');
     }
 }
